@@ -1,0 +1,16 @@
+
+type Customer {
+    id: ID!
+    code: String!
+    firstName: String!
+    lastName: String!
+    mothersLastName: String!
+    rfc: String!
+}
+
+input CustomerInput {
+    firstName: String!
+    lastName: String!
+    mothersLastName: String!
+    rfc: String!
+}

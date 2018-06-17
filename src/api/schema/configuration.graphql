@@ -1,0 +1,12 @@
+
+type Configuration {
+    financeRate: Int
+    downPayment: Int
+    deadline: Int
+}
+
+input ConfigurationInput {
+    financeRate: Int
+    downPayment: Int
+    deadline: Int
+}

@@ -1,0 +1,16 @@
+
+type Item {
+    id: ID!
+    code: String!
+    description: String!
+    model: String
+    price: Float!
+    stock: Int!
+}
+
+input ItemInput {
+    description: String!
+    model: String
+    price: Float!
+    stock: Int!
+}

@@ -1,0 +1,28 @@
+#import "./customer.graphql"
+#import "./item.graphql"
+#import "./configuration.graphql"
+
+type Query {
+  customers: [Customer]!
+  customer(id: ID): Customer
+  customerNextCode: Int!
+
+  items: [Item]!
+  item(id: ID): Item
+  itemNextCode: Int!
+
+  configuration: Configuration!
+
+}
+
+type Mutation {
+  createCustomer(customer: CustomerInput!): ID!
+  updateCustomer(id: ID!, customer: CustomerInput!): Boolean
+  deleteCustomer(id: ID!): Boolean
+
+  createItem(item: ItemInput!): ID!
+  updateItem(id: ID!, item: ItemInput!): Boolean
+  deleteItem(id: ID!): Boolean
+
+  updateConfiguration(configuration: ConfigurationInput!): Boolean
+}
