@@ -16,21 +16,6 @@ export class Executor {
     constructor(private container: Container) {
         this.handlers = defaultHandlers.slice();
     }
-
-    addHandler(
-        requestType: TypeRequest,
-        handlerType: TypeHandler<AsyncHandler<any, any>>) {
-        this.handlers.push({ requestType, handlerType });
-    }
-
-    addHandlers(handlers: Array<{
-        requestType: TypeRequest,
-        handlerType: TypeHandler<AsyncHandler<any, any>>
-    }>
-    ) {
-        this.handlers = this.handlers.concat(handlers);
-    }
-
     handle<TResponse = any>(request: Command | Query<any>): Promise<TResponse> {
         const handlerType = this.handlers.find(i => request instanceof i.requestType).handlerType;
         const handler = this.container.get(handlerType);

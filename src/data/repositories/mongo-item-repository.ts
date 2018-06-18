@@ -11,7 +11,7 @@ export class MongoItemRepository implements ItemRepository {
     }
 
     get(id: string): Promise<Item> {
-        return ItemModel.findOne({ id }).exec();
+        return ItemModel.findById(id).exec();
     }
 
     create(item: Item): Promise<void> {
@@ -19,17 +19,16 @@ export class MongoItemRepository implements ItemRepository {
     }
 
     update(item: Item): Promise<void> {
-        return ItemModel.findOneAndUpdate({ id: item.id }, item).then(() => null);
+        return ItemModel.findByIdAndUpdate(item.id, item).then(() => null);
     }
 
     delete(id: string): Promise<void> {
-        return ItemModel.findOneAndRemove({ id }).then(() => null);
+        return ItemModel.findByIdAndRemove(id).then(() => null);
     }
 
     nextCode(): Promise<number> {
-        return ItemModel.find().sort('-code').limit(1).then(i => {
-            return (i[0] ? i[0].code : 0) + 1;
-        }
+        return ItemModel.find().sort('-code').limit(1).then(i =>
+            (i[0] ? i[0].code : 0) + 1
         );
     }
 }

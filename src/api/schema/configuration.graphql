@@ -1,12 +1,12 @@
 
 type Configuration {
-    financeRate: Int
+    financeRate: Float
     downPayment: Int
     deadline: Int
 }
 
 input ConfigurationInput {
-    financeRate: Int
+    financeRate: Float
     downPayment: Int
     deadline: Int
 }

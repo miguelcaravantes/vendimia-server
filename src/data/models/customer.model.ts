@@ -1,7 +1,7 @@
 import * as mongoose from "mongoose";
 
 const CustomerSchema = new mongoose.Schema({
-    id: String,
+    _id: String,
     code: Number,
     firstName: String,
     lastName: String,
@@ -9,5 +9,12 @@ const CustomerSchema = new mongoose.Schema({
     rfc: String,
 
 });
+
+CustomerSchema.virtual('id').
+    get(function() { return this._id; }).
+    set(function(id: string) {
+        this._id = id;
+    });
+
 const CustomerModel = mongoose.model<any>('Customer', CustomerSchema);
 export { CustomerModel };

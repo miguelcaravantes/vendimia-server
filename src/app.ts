@@ -8,8 +8,6 @@ import * as mongoose from 'mongoose';
 import { CustomerApi } from './api/customer-api';
 import { ItemApi } from './api/item-api';
 import { ConfigurationApi } from './api/configuration-api';
-import { Executor } from './domain/core/executor';
-import { handlers } from './domain/core/handler-decorator';
 
 mongoose.connect('mongodb://localhost/vendimia');
 

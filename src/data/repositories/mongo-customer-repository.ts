@@ -11,7 +11,7 @@ export class MongoCustomerRepository implements CustomerRepository {
     }
 
     get(id: string): Promise<Customer> {
-        return CustomerModel.findOne({ id }).exec();
+        return CustomerModel.findById(id).exec();
     }
 
     create(customer: Customer): Promise<void> {
@@ -19,17 +19,16 @@ export class MongoCustomerRepository implements CustomerRepository {
     }
 
     update(customer: Customer): Promise<void> {
-        return CustomerModel.findOneAndUpdate({ id: customer.id }, customer).then(() => null);
+        return CustomerModel.findByIdAndUpdate(customer.id, customer).then(() => null);
     }
 
     delete(id: string): Promise<void> {
-        return CustomerModel.findOneAndRemove({ id }).then(() => null);
+        return CustomerModel.findByIdAndRemove(id).then(() => null);
     }
 
     nextCode(): Promise<number> {
-        return CustomerModel.find().sort('-code').limit(1).then(c => {
-            return (c[0] ? c[0].code : 0) + 1;
-        }
+        return CustomerModel.find().sort('-code').limit(1).then(c =>
+            (c[0] ? c[0].code : 0) + 1
         );
     }
 }
