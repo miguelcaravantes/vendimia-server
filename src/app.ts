@@ -8,13 +8,14 @@ import * as mongoose from 'mongoose';
 import { CustomerApi } from './api/customer-api';
 import { ItemApi } from './api/item-api';
 import { ConfigurationApi } from './api/configuration-api';
+import { SaleApi } from './api/sale-api';
 
 mongoose.connect('mongodb://localhost/vendimia');
 
 const app = express();
 
 const schema = buildSchema(graphqlSchema);
-applyMixins(RootApi, [CustomerApi, ItemApi, ConfigurationApi]);
+applyMixins(RootApi, [CustomerApi, ItemApi, ConfigurationApi, SaleApi]);
 
 const rootValue = container.resolve(RootApi);
 

@@ -1,6 +1,8 @@
 #import "./customer.graphql"
 #import "./item.graphql"
 #import "./configuration.graphql"
+#import "./sale.graphql"
+
 
 type Query {
   customers: [Customer]!
@@ -12,6 +14,8 @@ type Query {
   itemNextCode: Int!
 
   configuration: Configuration!
+
+  calculateSale(sale: SaleInput!): PrecalculatedSale!
 
 }
 

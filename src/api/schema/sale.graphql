@@ -1,0 +1,32 @@
+input SaleInput {
+    customerId: ID
+    details: [SaleDetailInput!]!
+}
+
+
+input SaleDetailInput {
+    itemId: ID!
+    quantity: Int!
+}
+
+type PrecalculatedSale {
+    details: [PrecalculatedSaleDetail!]!
+    downPayment: Float!
+    downPaymentBonus: Float!
+    total: Float!
+    monthlyPayments: [MonthlyPayment!]!
+}
+
+type PrecalculatedSaleDetail {
+    itemId: ID!
+    quantity: Int!
+    price: Float!
+    amount: Float!
+}
+
+type MonthlyPayment {
+    numberOfmonths: Int!,
+    monthlyPayment: Float!,
+    total: Float!,
+    saving: Float!
+}
