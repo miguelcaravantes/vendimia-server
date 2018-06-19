@@ -6,11 +6,11 @@ import { UpdateConfigurationCommand } from '../domain/use-cases/configuration/up
 
 export class ConfigurationApi extends RootApi {
 
-    configuration({ id }: { id: string }): Promise<Configuration> {
+    configuration(): Promise<Configuration> {
         const query = new GetConfigurationQuery();
         return this.executor.handle(query);
     }
-    updateConfiguration({ id, configuration }: any): Promise<void> {
+    updateConfiguration({ configuration }: any): Promise<void> {
         const command = new UpdateConfigurationCommand();
         Object.assign(command, configuration);
         return this.executor.handle(command);

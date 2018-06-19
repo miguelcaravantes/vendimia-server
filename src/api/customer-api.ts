@@ -1,6 +1,6 @@
 import { Customer } from "../domain/entities/customer";
 import { container } from '../inversify.config';
-import { UpdateCustomer } from "../domain/use-cases/customers/update-customer";
+import { UpdateCustomer, UpdateCustomerCommand } from "../domain/use-cases/customers/update-customer";
 import { RootApi } from "./root-api";
 import { GetCustomersQuery } from "../domain/use-cases/customers/get-customers";
 import { CreateCustomerCommand } from "../domain/use-cases/customers/create-customer";
@@ -23,9 +23,10 @@ export class CustomerApi extends RootApi {
         return this.executor.handle(command).then(() => command.id);
     }
     updateCustomer({ id, customer }: any): Promise<void> {
-        const updateCustomer = container.get(UpdateCustomer);
-        customer.id = id;
-        return updateCustomer.handle(customer);
+        const command = new UpdateCustomerCommand();
+        Object.assign(command, { id, ...customer });
+        return this.executor.handle(command);
+
     }
     deleteCustomer({ id }: { id: string }): Promise<void> {
         const command = new DeleteCustomerCommand(id);

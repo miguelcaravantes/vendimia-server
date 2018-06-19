@@ -1,6 +1,6 @@
 import { Item } from "../domain/entities/item";
 import { container } from '../inversify.config';
-import { UpdateItem } from "../domain/use-cases/items/update-item";
+import { UpdateItem, UpdateItemCommand } from "../domain/use-cases/items/update-item";
 import { RootApi } from "./root-api";
 import { GetItemsQuery } from "../domain/use-cases/items/get-items";
 import { CreateItemCommand } from "../domain/use-cases/items/create-item";
@@ -23,9 +23,9 @@ export class ItemApi extends RootApi {
         return this.executor.handle(command).then(() => command.id);
     }
     updateItem({ id, item }: any): Promise<void> {
-        const updateItem = container.get(UpdateItem);
-        item.id = id;
-        return updateItem.handle(item);
+        const command = new UpdateItemCommand();
+        Object.assign(command, { id, ...item });
+        return this.executor.handle(command);
     }
     deleteItem({ id }: { id: string }): Promise<void> {
         const command = new DeleteItemCommand(id);
