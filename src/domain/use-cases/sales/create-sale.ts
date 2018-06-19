@@ -59,6 +59,20 @@ export class CreateSale implements AsyncCommandHandler<CreateSaleCommand> {
         );
         Object.assign(sale, request);
         await this.saleRepository.create(sale);
+        await this.discountStock(request, items);
+    }
+
+    private discountStock(request: CreateSaleCommand, items: Item[]) {
+        const saveItemPromises: Array<Promise<void>> = [];
+
+        request.details.forEach(d => {
+            const item = items.find(i => i.id === d.itemId);
+            item.stock -= d.quantity;
+            const saveItemPromise = this.itemRepository.update(item);
+            saveItemPromises.push(saveItemPromise);
+        });
+
+        return Promise.all(saveItemPromises);
     }
 
 }

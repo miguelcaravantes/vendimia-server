@@ -3,7 +3,6 @@ import { Item } from "./item";
 
 export class Sale {
     id: string;
-    // TODO code in view
     code: number;
     customerId: string;
     readonly creationDate: Date;
@@ -17,6 +16,15 @@ export class Sale {
         numberOfMonths: number, total: number,
         creationDate?: Date,
     ) {
+
+        if (!id) throw new Error('id empty');
+        if (!code) throw new Error('code empty');
+        if (!customerId) throw new Error('customerId empty');
+        if (!details || details.length === 0) throw new Error('details empty');
+        if (!numberOfMonths) throw new Error('numberOfMonths empty');
+        if (!total) throw new Error('total empty');
+
+
         this.id = id;
         this.code = code;
         this.customerId = customerId;
@@ -35,6 +43,8 @@ export class SaleDetail {
         quantity: number,
         itemId: string
     ) {
+        if (!quantity) throw new Error('quantity empty');
+
         this.itemId = itemId;
         this.quantity = quantity;
     }
