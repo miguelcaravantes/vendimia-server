@@ -58,8 +58,9 @@ export class CreateSale implements AsyncCommandHandler<CreateSaleCommand> {
             total
         );
         Object.assign(sale, request);
-        await this.saleRepository.create(sale);
         await this.discountStock(request, items);
+        await this.saleRepository.create(sale);
+
     }
 
     private discountStock(request: CreateSaleCommand, items: Item[]) {
@@ -68,6 +69,9 @@ export class CreateSale implements AsyncCommandHandler<CreateSaleCommand> {
         request.details.forEach(d => {
             const item = items.find(i => i.id === d.itemId);
             item.stock -= d.quantity;
+            if (item.stock < 0) {
+                throw new Error('negative inventory');
+            }
             const saveItemPromise = this.itemRepository.update(item);
             saveItemPromises.push(saveItemPromise);
         });
