@@ -10,7 +10,8 @@ import { ItemApi } from './api/item-api';
 import { ConfigurationApi } from './api/configuration-api';
 import { SaleApi } from './api/sale-api';
 
-mongoose.connect('mongodb://localhost/vendimia');
+const connectionString = process.env.MONGO_URI || 'mongodb://localhost/vendimia';
+mongoose.connect(connectionString);
 
 const app = express();
 
