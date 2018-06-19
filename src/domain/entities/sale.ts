@@ -3,37 +3,39 @@ import { Item } from "./item";
 
 export class Sale {
     id: string;
+    // TODO code in view
     code: number;
     customerId: string;
-    customer: Customer;
     readonly creationDate: Date;
     details: SaleDetail[];
+    numberOfMonths: number;
+    total: number;
 
-    constructor(code: number, creationDate?: Date) {
+    constructor(
+        id: string, code: number, customerId: string,
+        details: SaleDetail[],
+        numberOfMonths: number, total: number,
+        creationDate?: Date,
+    ) {
+        this.id = id;
         this.code = code;
+        this.customerId = customerId;
         this.creationDate = creationDate || new Date();
+        this.details = details;
+        this.numberOfMonths = numberOfMonths;
+        this.total = total;
     }
 }
 
 export class SaleDetail {
-    id: string;
     itemId: string;
-    item: Item;
     quantity: number;
-    price: number;
-    amount: number;
 
     constructor(
-        id: string,
-        item: Item,
         quantity: number,
-        price: number,
+        itemId: string
     ) {
-        this.id = id;
-        this.itemId = item.id;
-        this.item = item;
+        this.itemId = itemId;
         this.quantity = quantity;
-        this.price = price;
-        this.amount = quantity * price;
     }
 }

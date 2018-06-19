@@ -1,7 +1,13 @@
-input SaleInput {
-    customerId: ID
+input PreSaleInput {
     details: [SaleDetailInput!]!
 }
+
+input SaleInput {
+    customerId: ID!
+    details: [SaleDetailInput!]!
+    numberOfMonths: Int!
+}
+
 
 
 input SaleDetailInput {
@@ -19,14 +25,21 @@ type PrecalculatedSale {
 
 type PrecalculatedSaleDetail {
     itemId: ID!
-    quantity: Int!
     price: Float!
     amount: Float!
 }
 
 type MonthlyPayment {
-    numberOfmonths: Int!,
+    numberOfMonths: Int!,
     monthlyPayment: Float!,
     total: Float!,
     saving: Float!
+}
+
+type Sale{
+    id: ID!
+    code: Int!
+    customer: Customer!
+    total: Float!
+    creationDate: String
 }

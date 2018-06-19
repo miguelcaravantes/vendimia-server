@@ -9,6 +9,8 @@ import { ConfigurationRepository } from './domain/contracts/repositories/configu
 import { MongoConfigurationRepository } from './data/repositories/mongo-configuration-repository';
 import { Executor } from './domain/core/executor';
 import { SaleCalculator } from './domain/services/sale-calculator';
+import { SaleRepository } from './domain/contracts/repositories/sale-repository';
+import { MongoSaleRepository } from './data/repositories/mongo-sale-repository';
 
 const container = new Container({ autoBindInjectable: true });
 
@@ -18,6 +20,7 @@ container.bind<SaleCalculator>(SaleCalculator).toSelf();
 container.bind<CustomerRepository>(CustomerRepository).to(MongoCustomerRepository);
 container.bind<ItemRepository>(ItemRepository).to(MongoItemRepository);
 container.bind<ConfigurationRepository>(ConfigurationRepository).to(MongoConfigurationRepository);
+container.bind<SaleRepository>(SaleRepository).to(MongoSaleRepository);
 
 container.bind<Container>(Container).toConstantValue(container);
 export { container };

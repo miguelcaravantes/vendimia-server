@@ -14,8 +14,11 @@ type Query {
   itemNextCode: Int!
 
   configuration: Configuration!
+  
+  sales: [Sale!]!
+  calculateSale(sale: PreSaleInput!): PrecalculatedSale!
+  saleNextCode: Int!
 
-  calculateSale(sale: SaleInput!): PrecalculatedSale!
 
 }
 
@@ -29,4 +32,7 @@ type Mutation {
   deleteItem(id: ID!): Boolean
 
   updateConfiguration(configuration: ConfigurationInput!): Boolean
+
+  createSale(sale: SaleInput!): ID!
+
 }

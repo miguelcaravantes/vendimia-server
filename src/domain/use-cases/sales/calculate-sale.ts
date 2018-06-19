@@ -30,7 +30,7 @@ export class CalculateSaleResponse {
     total: number;
 
     monthlyPayments: Array<{
-        numberOfmonths: number,
+        numberOfMonths: number,
         monthlyPayment: number,
         total: number,
         saving: number
@@ -49,13 +49,7 @@ export class CalculateSale implements AsyncQueryHandler<CalculateSaleQuery, any>
     }
 
     async handle(request: CalculateSaleQuery): Promise<any> {
-        const response: CalculateSaleResponse = {
-            details: [...request.details.map(d => d as any)],
-            downPayment: 0,
-            downPaymentBonus: 0,
-            total: 0,
-            monthlyPayments: null
-        };
+
 
         const itemPromises: Array<Promise<Item>> = [];
         request.details.forEach(d => {
@@ -66,23 +60,8 @@ export class CalculateSale implements AsyncQueryHandler<CalculateSaleQuery, any>
         const items = await Promise.all(itemPromises);
         const conf = await configurationPromise;
 
-        response.details.forEach(d => {
-            const item = items.find(i => i.id === d.itemId);
-            d.price = this.calc.detailPrice(item.price, conf.financeRate, conf.deadline);
-            d.amount = this.calc.amount(d.price, d.quantity);
-        });
-        const amount = response.details.map(d => d.amount).reduce((a, b) => a + b, 0);
-        response.downPayment = this.calc.downPayment(amount, conf.downPayment);
-        response.downPaymentBonus = this.calc.downPaymentBonus(
-            response.downPayment,
-            conf.financeRate,
-            conf.deadline);
-        response.total = this.calc.total(amount, response.downPayment, response.downPaymentBonus);
-
-        // calculate monthly payments
-
+        const response = this.calc.calculateWithMaxDeadline(request, items, conf);
         response.monthlyPayments = this.calc.calculateMonthlyPayments(response.total, conf);
-
         return response;
     }
 
